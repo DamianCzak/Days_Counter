@@ -1,9 +1,7 @@
 def main():
     loop = True
 
-
     while loop == True:
-
         error = False
         class Date:
             day: int
@@ -16,7 +14,7 @@ def main():
         days_of_your_life = 0
 
         # Dates input
-        birth_date, current_date, error = data_input(birth_date, current_date, error)
+        birth_date, current_date, error = data_input(birth_date, current_date)
         if error == True:
             continue
 
@@ -41,19 +39,14 @@ def main():
         else:
             loop = False
 
-def data_input(birth_date, current_date, error):
+def data_input(birth_date, current_date):
+    error = False
 
     try:
         birth_date.day, birth_date.month, birth_date.year = [int(x) for x in input("Enter your date of birth (day month year): ").split()]
-    except:
-        print("Entered date of birth is not only digits or incorrect format")
-        error = True
-        return birth_date, current_date, error
-
-    try:
         current_date.day, current_date.month, current_date.year = [int(x) for x in input("Enter current date (day month year): ").split()]
     except:
-        print("Entered current date is not only digits or incorrect format")
+        print("Entered date is not only digits or incorrect format")
         error = True
         return birth_date, current_date, error
 

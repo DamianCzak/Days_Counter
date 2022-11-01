@@ -1,27 +1,37 @@
 def main():
     loop = True
-    error = False
-    class Date:
-        day: int
-        month: int
-        year: int
-        date: str
 
-    birth_date = Date()
-    current_date = Date()
-    days_of_your_life = 0
 
     while loop == True:
+
+        error = False
+        class Date:
+            day: int
+            month: int
+            year: int
+            date: str
+
+        birth_date = Date()
+        current_date = Date()
+        days_of_your_life = 0
+
         # Dates input
         birth_date, current_date, error = data_input(birth_date, current_date, error)
+        if error == True:
+            continue
+
         # Check if input dates are in the correct scope of numbers
         error = error_elemination(birth_date, current_date)
+        if error == True:
+            continue
+
         # Count days since birthday
-        days_of_your_life = counter(birth_date, current_date)
+        days_of_your_life = count_days_of_your_life(birth_date, current_date)
 
         if error == False:
             if days_of_your_life == 1:
                 print("You have " + str(days_of_your_life) + " day")
+
             else:
                 print("You have " + str(days_of_your_life) + " days")
 
@@ -32,36 +42,20 @@ def main():
             loop = False
 
 def data_input(birth_date, current_date, error):
-    birth_date.date = input("Enter your date of birth (day month year): ")
-    current_date.date = input("Enter current date (day month year): ")
 
-    # Check if input dates are digits
-    if (birth_date.date.replace(" ","").isdigit() == False or
-        current_date.date.replace(" ","").isdigit() == False):
+    try:
+        birth_date.day, birth_date.month, birth_date.year = [int(x) for x in input("Enter your date of birth (day month year): ").split()]
+    except:
+        print("Entered date of birth is not only digits or incorrect format")
         error = True
-        print("Incorrect date")
         return birth_date, current_date, error
 
-    birth_date.date = birth_date.date.split()
-    current_date.date = current_date.date.split()
-
-    print("Is gooood")
-    print(birth_date.date)
-
-    # Check if input dates are in the correct format
-    if (len(birth_date.date) != 3  or
-        len(current_date.date) != 3):
+    try:
+        current_date.day, current_date.month, current_date.year = [int(x) for x in input("Enter current date (day month year): ").split()]
+    except:
+        print("Entered current date is not only digits or incorrect format")
         error = True
-        print("Incorrent date")
         return birth_date, current_date, error
-    else:
-        birth_date.day = int(birth_date.date[0])
-        birth_date.month = int(birth_date.date[1])
-        birth_date.year = int(birth_date.date[2])
-
-        current_date.day = int(current_date.date[0])
-        current_date.month = int(current_date.date[1])
-        current_date.year = int(current_date.date[2])
 
     return birth_date, current_date, error
 
@@ -126,7 +120,7 @@ def error_elemination(birth_date, current_date):
     else:
         return error
 
-def counter(birth_date, current_date):
+def count_days_of_your_life(birth_date, current_date):
     months_of_the_year = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
     # Counter for days in between year of birth and current year (years_in_between_days)

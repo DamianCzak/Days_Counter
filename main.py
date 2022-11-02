@@ -2,14 +2,20 @@ def main():
 
     while True:
         error = False
+        days_of_your_life = 0
+
         class Date:
             day: int
             month: int
             year: int
+            leap_year: bool
+
+            def is_it_leap_year(self,  year):
+                if year % 400 == 0 or (year % 4 == 0 and year % 100 != 0):
+                    return True
 
         birth_date = Date()
         current_date = Date()
-        days_of_your_life = 0
 
         # Dates input
         birth_date, current_date, error = data_input(birth_date, current_date)
@@ -23,13 +29,10 @@ def main():
 
         # Count days since birthday
         days_of_your_life = count_days_of_your_life(birth_date, current_date)
-
-        if error == False:
-            if days_of_your_life == 1:
-                print("You have " + str(days_of_your_life) + " day")
-
-            else:
-                print("You have " + str(days_of_your_life) + " days")
+        if days_of_your_life == 1:
+            print("You have " + str(days_of_your_life) + " day")
+        else:
+            print("You have " + str(days_of_your_life) + " days")
 
         repeat_question = input("Would you like to repeat (Y/N): ")
         if repeat_question.upper() == 'Y':
@@ -48,10 +51,14 @@ def data_input(birth_date, current_date):
         error = True
         return birth_date, current_date, error
 
+    birth_date.leap_year = birth_date.is_it_leap_year(birth_date.year)
+    current_date.leap_year = current_date.is_it_leap_year(current_date.year)
+
     return birth_date, current_date, error
 
 def error_elemination(birth_date, current_date):
     error = False
+    months = {1:31, 2:28, 3:31, 4:30, 5:31, 6:30, 7:31, 8:31, 9:30, 10:31, 11:30, 12:31}
 
     if (current_date.month not in range(1,13)):
         print("Incorrect current month")
@@ -70,9 +77,7 @@ def error_elemination(birth_date, current_date):
               current_date.month == 2) or
          ((current_date.day > 29 and
               current_date.month == 2) and
-                  (current_date.year % 400 == 0 or
-                  (current_date.year % 4 == 0 and
-                   current_date.year % 100 != 0)))):
+                  current_date.leap_year == True)):
         print("Incorrect current day")
         error = True
         return error
@@ -85,9 +90,7 @@ def error_elemination(birth_date, current_date):
               birth_date.month == 2) or
          ((birth_date.day > 29 and
               birth_date.month == 2) and
-                  (birth_date.year % 400 == 0 or
-                  (birth_date.year % 4 == 0 and
-                   birth_date.year % 100 != 0)))):
+                  birth_date.leap_year == True)):
         print("Incorrect birth day")
         error = True
         return error
@@ -116,9 +119,7 @@ def count_days_of_your_life(birth_date, current_date):
     temp_birth_year = birth_date.year
     leap_year_days = 0
     while temp_birth_year < current_date.year:
-        if (birth_date.year % 400 == 0 or
-            birth_date.year % 4 == 0 and
-            birth_date.year % 100 != 0):
+        if birth_date.leap_year == True:
             leap_year_days += 1
         temp_birth_year += 1
     years_in_between_days = ((current_date.year-birth_date.year-1)*365)+leap_year_days
@@ -131,9 +132,7 @@ def count_days_of_your_life(birth_date, current_date):
         months_counter += 1
     if ((birth_date.month == 1 or
          birth_date.month == 2) and
-            birth_date.year % 400 == 0 or
-            (birth_date.year % 4 == 0 and
-            birth_date.year % 100 != 0)):
+            birth_date.leap_year == True):
         birth_year_days += 1
     birth_year_days -= birth_date.day
 
@@ -143,10 +142,7 @@ def count_days_of_your_life(birth_date, current_date):
     while months_counter >= 2:
         current_year_days = current_year_days + months_of_the_year[months_counter-2]
         months_counter -= 1
-    if ((current_date.month in (3, 4, 5, 6, 7, 8, 9, 10, 11, 12)) and
-            current_date.year % 400 == 0 or
-            (current_date.year % 4 == 0 and
-            current_date.year % 100 != 0)):
+    if (current_date.month in (3, 4, 5, 6, 7, 8, 9, 10, 11, 12)) and current_date.leap_year == True:
         current_year_days += 1
     current_year_days += current_date.day
 

@@ -7,7 +7,6 @@ def main():
             day: int
             month: int
             year: int
-            date: str
 
         birth_date = Date()
         current_date = Date()
@@ -43,8 +42,6 @@ def data_input(birth_date, current_date):
     error = False
 
     try:
-        #birth_date.day, birth_date.month, birth_date.year = [int(x) for x in input("Enter your date of birth (day month year): ").split()]
-        #current_date.day, current_date.month, current_date.year = [int(x) for x in input("Enter current date (day month year): ").split()]
         birth_date.day, birth_date.month, birth_date.year = list(map(int, input("Enter your date of birth (day month year): ").split()))
         current_date.day, current_date.month, current_date.year = list(map(int, input("Enter current date (day month year): ").split()))
     except:
@@ -57,13 +54,11 @@ def data_input(birth_date, current_date):
 def error_elemination(birth_date, current_date):
     error = False
 
-    if (current_date.month > 12 or
-        current_date.month < 1):
+    if (current_date.month not in range(1,13)):
         print("Incorrect current month")
         error = True
         return error
-    elif (birth_date.month > 12 or
-          birth_date.month < 1):
+    elif (birth_date.month not in range(1, 13)):
         print("Incorrect birth month")
         error = True
         return error

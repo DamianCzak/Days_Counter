@@ -3,7 +3,7 @@ def main():
     while True:
         error = False
         days_of_your_life = 0
-
+        x = 0
         class Date:
             day: int
             month: int

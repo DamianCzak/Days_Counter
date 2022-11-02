@@ -1,7 +1,6 @@
 def main():
-    loop = True
 
-    while loop == True:
+    while True:
         error = False
         class Date:
             day: int
@@ -34,9 +33,9 @@ def main():
 
         repeat_question = input("Would you like to repeat (Y/N): ")
         if repeat_question.upper() == 'Y':
-            loop = True
+            continue
         else:
-            loop = False
+            break
 
 def data_input(birth_date, current_date):
     error = False

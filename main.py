@@ -43,8 +43,10 @@ def data_input(birth_date, current_date):
     error = False
 
     try:
-        birth_date.day, birth_date.month, birth_date.year = [int(x) for x in input("Enter your date of birth (day month year): ").split()]
-        current_date.day, current_date.month, current_date.year = [int(x) for x in input("Enter current date (day month year): ").split()]
+        #birth_date.day, birth_date.month, birth_date.year = [int(x) for x in input("Enter your date of birth (day month year): ").split()]
+        #current_date.day, current_date.month, current_date.year = [int(x) for x in input("Enter current date (day month year): ").split()]
+        birth_date.day, birth_date.month, birth_date.year = list(map(int, input("Enter your date of birth (day month year): ").split()))
+        current_date.day, current_date.month, current_date.year = list(map(int, input("Enter current date (day month year): ").split()))
     except:
         print("Entered date is not only digits or incorrect format")
         error = True
